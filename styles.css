@@ -121,6 +121,30 @@ a:hover{ opacity:.92; }
   align-items: start;
 }
 
+.hero-aside{
+  display: grid;
+  gap: 12px;
+}
+
+.hero-visual{
+  border-radius: var(--radius2);
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.03);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: 10px;
+}
+
+.hero-visual-img{
+  width: 100%;
+  height: auto;
+  max-height: 360px;
+  object-fit: contain;
+  display: block;
+}
+
 .badge{
   display:inline-flex;
   align-items:center;
@@ -356,6 +380,7 @@ a:hover{ opacity:.92; }
   .grid-3{ grid-template-columns: 1fr; }
   .grid-2{ grid-template-columns: 1fr; }
   .pricing{ grid-template-columns: 1fr; }
+  .hero-visual-img{ max-height: 320px; }
 }
 
 @media (max-width: 520px){
@@ -363,4 +388,6 @@ a:hover{ opacity:.92; }
   .kv-row{ grid-template-columns: 62px 1fr; }
   .cta-inner{ flex-direction: column; align-items: stretch; }
   .footer-inner{ flex-direction: column; align-items: flex-start; }
+  .hero-visual{ padding: 8px; }
+  .hero-visual-img{ max-height: 280px; }
 }
