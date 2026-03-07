@@ -2,9 +2,9 @@
   --bg: #0a1929;
   --bg2:#1e3a8a;
   --card:#ffffff;
-  --text:#ffffff;
-  --muted:#94a3b8;
-  --line: rgba(255,255,255,.12);
+  --text:#1a2332;
+  --muted:#64748b;
+  --line: rgba(26,35,50,.08);
   --shadow: 0 20px 60px rgba(0,0,0,.25);
   --primary:#6366f1;
   --primary2:#8b5cf6;
@@ -313,14 +313,14 @@ a:hover{ opacity:.92; }
 .price-note-section{
   text-align: center;
   margin: 20px 0;
-  color: var(--muted);
+  color: #000;
 }
 
 .panel{
   padding: 28px;
   border-radius: var(--radius2);
   border: 1px solid var(--line);
-  background: var(--card);
+  background: #fff;
   box-shadow: var(--shadow);
 }
 .panel-title{ margin: 0 0 10px; font-size: 16px; }
