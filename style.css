@@ -992,3 +992,263 @@ h3 {
   .story-lead-conclusion { font-size: 16px; }
   .story-point { font-size: 13px; }
 }
+
+.cinematic{
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: #000;
+  transition: opacity .9s ease, transform .9s ease;
+}
+.cinematic.is-out{ opacity:0; transform: scale(1.01); }
+.cinematic-bg{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(900px 500px at 50% 40%, rgba(124,58,237,.28), transparent 60%),
+    radial-gradient(700px 420px at 70% 25%, rgba(59,130,246,.18), transparent 60%),
+    linear-gradient(180deg, #000, #070a12);
+  filter: saturate(1.08);
+}
+.cinematic-bg::before{
+  content:"";
+  position:absolute;
+  inset:-40px;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(255,255,255,.12), transparent 36%),
+    radial-gradient(circle at 80% 30%, rgba(255,255,255,.10), transparent 40%),
+    radial-gradient(circle at 40% 70%, rgba(255,255,255,.09), transparent 42%);
+  opacity:.12;
+  animation: cinematicFloat 3.2s ease-in-out infinite;
+}
+@keyframes cinematicFloat{ 0%,100%{ transform: translate3d(0,0,0);} 50%{ transform: translate3d(0,-10px,0);} }
+.cinematic-inner{
+  position:relative;
+  padding: 22px 18px;
+  text-align:center;
+  max-width: 560px;
+}
+.cinematic-kicker{
+  font-weight: 800;
+  letter-spacing: .12em;
+  font-size: 12px;
+  color: rgba(255,255,255,.78);
+}
+.cinematic-title{
+  margin-top: 12px;
+  font-size: clamp(30px, 5vw, 56px);
+  font-weight: 900;
+  letter-spacing: .02em;
+}
+.cinematic-sub{
+  margin-top: 12px;
+  font-size: 13px;
+  letter-spacing: .22em;
+  color: rgba(167,139,250,.85);
+}
+
+.neuro-layer{
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.neuro-noise{
+  position:absolute;
+  inset:0;
+  opacity:.22;
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.35), transparent 50%),
+    radial-gradient(1px 1px at 70% 20%, rgba(167,139,250,.45), transparent 50%),
+    radial-gradient(1px 1px at 35% 80%, rgba(59,130,246,.28), transparent 50%);
+  background-size: 240px 240px, 280px 280px, 320px 320px;
+  animation: neuroNoise 5.6s linear infinite;
+}
+@keyframes neuroNoise{ 0%{ transform: translate3d(0,0,0);} 100%{ transform: translate3d(-40px,-60px,0);} }
+
+.neuro-map{
+  position: fixed;
+  right: 18px;
+  top: 92px;
+  width: 240px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(11,15,23,.62);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 30px 90px rgba(0,0,0,.55);
+  padding: 12px;
+}
+.neuro-map-title{
+  font-size: 11px;
+  letter-spacing: .18em;
+  font-weight: 900;
+  color: rgba(255,255,255,.72);
+}
+.neuro-map-visual{
+  position: relative;
+  height: 240px;
+  margin-top: 10px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.08);
+  overflow:hidden;
+}
+.neuro-svg{
+  position:absolute;
+  inset: 8px 0 8px 0;
+  width:100%;
+  height: calc(100% - 16px);
+}
+.neuro-path{
+  stroke: rgba(167,139,250,.42);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-dasharray: 8 10;
+  animation: neuroPulse 2.8s linear infinite;
+}
+@keyframes neuroPulse{ 0%{ stroke-dashoffset: 0;} 100%{ stroke-dashoffset: -36;} }
+
+.neuro-nodes{ position:absolute; inset: 0; }
+.neuro-node{
+  position:absolute;
+  left: 18px;
+  display:flex;
+  align-items:center;
+  gap: 8px;
+  transform: translate3d(0,0,0);
+  transition: transform .22s ease, opacity .22s ease;
+  opacity: .55;
+}
+.neuro-node .neuro-label{
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(255,255,255,.82);
+}
+.neuro-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.22);
+  background: rgba(255,255,255,.10);
+  box-shadow: 0 0 0 rgba(124,58,237,0);
+  transition: background .22s ease, box-shadow .22s ease, transform .22s ease;
+}
+
+.neuro-node[data-step="brain"]{ top: 20px; }
+.neuro-node[data-step="cervical"]{ top: 54px; }
+.neuro-node[data-step="nerve"]{ top: 88px; }
+.neuro-node[data-step="autonomic"]{ top: 122px; }
+.neuro-node[data-step="symptom"]{ top: 156px; }
+.neuro-node[data-step="cause"]{ top: 190px; }
+.neuro-node[data-step="solve"]{ top: 224px; }
+
+.neuro-node.is-active{
+  opacity: 1;
+  transform: translate3d(2px,-1px,0);
+}
+.neuro-node.is-active .neuro-dot{
+  background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(59,130,246,.85));
+  box-shadow: 0 0 0 6px rgba(124,58,237,.18), 0 0 24px rgba(167,139,250,.30);
+  transform: scale(1.05);
+}
+
+.neuro-map-foot{
+  margin-top: 10px;
+  font-size: 11px;
+  color: rgba(255,255,255,.62);
+}
+
+[data-reveal]{
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+  transition: opacity .7s ease, transform .7s ease;
+}
+[data-reveal].is-in{
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.card,
+.panel,
+.pricing-card,
+.profile-card,
+.faq-item,
+.cta-band{
+  transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+}
+.card:hover,
+.panel:hover,
+.pricing-card:hover,
+.profile-card:hover,
+.faq-item:hover,
+.cta-band:hover{
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,.22);
+  box-shadow: 0 24px 70px rgba(0,0,0,.45);
+}
+
+[data-price-drama]{
+  transform: translate3d(0, 8px, 0);
+  opacity: .92;
+}
+[data-price-drama].is-drama{
+  animation: priceIn .7s ease both;
+}
+@keyframes priceIn{
+  from{ transform: translate3d(0, 16px, 0); opacity: .0; }
+  to{ transform: translate3d(0, 0, 0); opacity: 1; }
+}
+[data-price-drama].is-drama .pricing-header{
+  animation: priceSink .9s ease both;
+}
+@keyframes priceSink{
+  0%{ transform: translate3d(0,0,0); opacity: 1; }
+  55%{ transform: translate3d(0, 10px, 0); opacity: .65; }
+  100%{ transform: translate3d(0, 6px, 0); opacity: .75; }
+}
+
+[data-price-drama].is-drama .pricing-featured{
+  animation: priceGlow 1.2s ease both;
+  transform-origin: center;
+}
+@keyframes priceGlow{
+  0%{ transform: translate3d(0,10px,0) scale(.985); filter: brightness(.95); }
+  55%{ transform: translate3d(0,0,0) scale(1.01); filter: brightness(1.08); }
+  100%{ transform: translate3d(0,0,0) scale(1.0); filter: brightness(1.02); }
+}
+
+[data-price-drama].is-drama .pricing-badge{
+  box-shadow: 0 0 0 6px rgba(124,58,237,.10), 0 0 30px rgba(167,139,250,.26);
+}
+
+@media (prefers-reduced-motion: reduce){
+  .card:hover,
+  .panel:hover,
+  .pricing-card:hover,
+  .profile-card:hover,
+  .faq-item:hover,
+  .cta-band:hover{
+    transform: none;
+    box-shadow: none;
+  }
+  [data-price-drama].is-drama,
+  [data-price-drama].is-drama .pricing-header,
+  [data-price-drama].is-drama .pricing-featured{
+    animation: none !important;
+  }
+}
+
+@media (max-width: 1100px){
+  .neuro-map{ display:none; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .cinematic-bg::before,
+  .neuro-noise,
+  .neuro-path{ animation: none !important; }
+  [data-reveal]{ opacity: 1; transform: none; }
+}

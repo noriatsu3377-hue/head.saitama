@@ -17,6 +17,37 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <div class="cinematic" id="cinematic" aria-hidden="true">
+      <div class="cinematic-bg"></div>
+      <div class="cinematic-inner">
+        <div class="cinematic-kicker">頭・頸椎・神経から整える</div>
+        <div class="cinematic-title">ヘッドコンディショニングー極ー</div>
+        <div class="cinematic-sub">Neuro Map Experience</div>
+      </div>
+    </div>
+
+    <div class="neuro-layer" aria-hidden="true">
+      <div class="neuro-noise"></div>
+      <div class="neuro-map" id="neuroMap">
+        <div class="neuro-map-title">NEURO MAP</div>
+        <div class="neuro-map-visual">
+          <svg class="neuro-svg" viewBox="0 0 220 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path class="neuro-path" d="M110 34 C110 62 92 80 92 108 C92 140 128 148 128 178 C128 214 92 222 92 252 C92 286 128 296 128 328 C128 366 100 378 100 410 C100 448 124 464 124 492" />
+          </svg>
+          <div class="neuro-nodes">
+            <div class="neuro-node" data-step="brain"><span class="neuro-dot"></span><span class="neuro-label">脳</span></div>
+            <div class="neuro-node" data-step="cervical"><span class="neuro-dot"></span><span class="neuro-label">頸椎</span></div>
+            <div class="neuro-node" data-step="nerve"><span class="neuro-dot"></span><span class="neuro-label">神経</span></div>
+            <div class="neuro-node" data-step="autonomic"><span class="neuro-dot"></span><span class="neuro-label">自律神経</span></div>
+            <div class="neuro-node" data-step="symptom"><span class="neuro-dot"></span><span class="neuro-label">症状</span></div>
+            <div class="neuro-node" data-step="cause"><span class="neuro-dot"></span><span class="neuro-label">原因</span></div>
+            <div class="neuro-node" data-step="solve"><span class="neuro-dot"></span><span class="neuro-label">解決</span></div>
+          </div>
+        </div>
+        <div class="neuro-map-foot">スクロールでマップが完成します</div>
+      </div>
+    </div>
+
     <header class="site-header">
       <div class="container header-inner">
         <div class="brand">
@@ -30,7 +61,7 @@
     </header>
 
     <main>
-      <section class="hero">
+      <section class="hero" data-neuro-anchor="brain" data-reveal>
         <div class="container hero-inner">
           <div class="hero-copy">
             <div class="hero-badge">埼玉開催｜1日集中 8時間</div>
@@ -79,7 +110,7 @@
         </div>
       </section>
 
-      <section class="section section-muted">
+      <section class="section section-muted" data-neuro-anchor="cervical" data-reveal>
         <div class="container">
           <h2>こんなお悩みありませんか？</h2>
           <p class="lead-2">あなたは、こんな経験はありませんか？</p>
@@ -114,7 +145,7 @@
         </div>
       </section>
 
-      <section class="section">
+      <section class="section" data-neuro-anchor="nerve" data-reveal>
         <div class="container">
           <h2>なぜ多くの施術家は結果が出せないのか</h2>
           <div class="story-lead">
@@ -153,7 +184,7 @@
         </div>
       </section>
 
-      <section class="section section-muted">
+      <section class="section section-muted" data-neuro-anchor="autonomic" data-reveal>
         <div class="container">
           <h2>ヘッドコンディショニングー極ーとは</h2>
           <div class="story-lead">
@@ -191,7 +222,7 @@
         </div>
       </section>
 
-      <section class="section">
+      <section class="section" data-neuro-anchor="symptom" data-reveal>
         <div class="container">
           <h2>セミナーで得られる未来</h2>
           <div class="story-lead">
@@ -236,7 +267,7 @@
         </div>
       </section>
 
-      <section id="details" class="section">
+      <section id="details" class="section" data-neuro-anchor="cause" data-reveal>
         <div class="container">
           <h2>開催情報</h2>
 
@@ -262,10 +293,10 @@
             </div>
           </div>
 
-          <div class="pricing-card">
+          <div class="pricing-card" data-price-drama>
             <div class="pricing-header">
               <div class="pricing-original">通常価格</div>
-              <div class="pricing-price">¥110,000</div>
+              <div class="pricing-price" data-count-to="110000">¥110,000</div>
             </div>
             <div class="pricing-divider">
               <div class="pricing-arrow">↓</div>
@@ -273,7 +304,7 @@
             </div>
             <div class="pricing-featured">
               <div class="pricing-badge">早割</div>
-              <div class="pricing-price">¥88,000</div>
+              <div class="pricing-price" data-count-to="88000">¥88,000</div>
               <div class="pricing-note">3月末まで</div>
             </div>
           </div>
@@ -473,7 +504,7 @@
         </div>
       </section>
 
-      <section class="section">
+      <section class="section" data-neuro-anchor="solve" data-reveal>
         <div class="container">
           <h2>セミナーカリキュラム</h2>
           <p class="lead-2">1日集中講座8時間（中1時間休憩）。「体感変化」と「再現性」を最優先した、完全実装型の内容です。</p>
@@ -733,6 +764,122 @@
           makeTransparentAndCrop();
         } else {
           img.addEventListener('load', makeTransparentAndCrop, { once: true });
+        }
+      })();
+
+      (() => {
+        const seenKey = 'neuro_lp_seen_v1';
+        const cinematic = document.getElementById('cinematic');
+        const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        const markSeen = () => {
+          try { localStorage.setItem(seenKey, '1'); } catch (_) {}
+        };
+
+        const hasSeen = () => {
+          try { return localStorage.getItem(seenKey) === '1'; } catch (_) { return false; }
+        };
+
+        if (cinematic) {
+          const skip = prefersReduced || hasSeen();
+          if (skip) {
+            cinematic.style.display = 'none';
+          } else {
+            window.setTimeout(() => {
+              cinematic.classList.add('is-out');
+              window.setTimeout(() => {
+                cinematic.style.display = 'none';
+              }, 900);
+            }, 2300);
+            markSeen();
+          }
+        }
+
+        const anchors = Array.from(document.querySelectorAll('[data-neuro-anchor]'));
+        const map = document.getElementById('neuroMap');
+        const nodes = map ? Array.from(map.querySelectorAll('.neuro-node')) : [];
+        const setActive = (step) => {
+          if (!map) return;
+          map.setAttribute('data-active', step);
+          nodes.forEach((n) => {
+            n.classList.toggle('is-active', n.getAttribute('data-step') === step);
+          });
+        };
+
+        const revealEls = Array.from(document.querySelectorAll('[data-reveal]'));
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('is-in');
+            }
+          });
+        }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+
+        revealEls.forEach((el) => io.observe(el));
+
+        const neuroIo = new IntersectionObserver((entries) => {
+          const visible = entries
+            .filter((e) => e.isIntersecting)
+            .sort((a, b) => (b.intersectionRatio - a.intersectionRatio));
+          if (!visible.length) return;
+          const step = visible[0].target.getAttribute('data-neuro-anchor');
+          if (step) setActive(step);
+        }, { rootMargin: '-10% 0px -55% 0px', threshold: [0.12, 0.22, 0.35, 0.5] });
+
+        anchors.forEach((el) => neuroIo.observe(el));
+
+        if (anchors.length) {
+          const first = anchors[0].getAttribute('data-neuro-anchor');
+          if (first) setActive(first);
+        }
+
+        const priceCard = document.querySelector('[data-price-drama]');
+        const countEls = Array.from(document.querySelectorAll('[data-count-to]'));
+
+        const formatJPY = (n) => {
+          try {
+            return '¥' + Math.round(n).toLocaleString('ja-JP');
+          } catch (_) {
+            return '¥' + String(Math.round(n));
+          }
+        };
+
+        const animateCount = (el, to) => {
+          const prefers = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (prefers) {
+            el.textContent = formatJPY(to);
+            return;
+          }
+
+          const from = 0;
+          const dur = 900;
+          const start = performance.now();
+          const tick = (now) => {
+            const t = Math.min(1, (now - start) / dur);
+            const eased = 1 - Math.pow(1 - t, 3);
+            const v = from + (to - from) * eased;
+            el.textContent = formatJPY(v);
+            if (t < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        };
+
+        let priceRan = false;
+        if (priceCard) {
+          const priceIo = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+              if (!e.isIntersecting || priceRan) return;
+              priceRan = true;
+              priceCard.classList.add('is-drama');
+              countEls.forEach((el) => {
+                const to = Number(el.getAttribute('data-count-to') || '0');
+                if (Number.isFinite(to) && to > 0) animateCount(el, to);
+              });
+              priceIo.disconnect();
+            });
+          }, { threshold: 0.35 });
+
+          priceIo.observe(priceCard);
         }
       })();
     </script>
